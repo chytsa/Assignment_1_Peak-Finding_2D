@@ -1,5 +1,6 @@
 #include<iostream>
 #include<stdlib.h>
+#include<time.h>
 using namespace std;
 int n = 9;					// Map boundary
 int  **map;					// Map address
@@ -13,36 +14,115 @@ int check_peak(){
 				return 1;
 		}
 		else if(row == n - 1){
-			
+			if(map[row][column] < map[row-1][column] || map[row][column] < map[row][column+1])
+				return 0;
+			else
+				return 1;
 		}
 		else{
-			
+			if(map[row][column] < map[row-1][column])
+				return 0;
+			else if(map[row][column] < map[row+1][column])
+				return 0;
+			else if(map[row][column] < map[row][column+1])
+				return 0;
+			else
+				return 1;
 		}
 	}
 	else if(column == n - 1){
-		
+		if(row == 0){
+			if(map[row][column] < map[row+1][column] || map[row][column] < map[row][column-1])
+				return 0;
+			else
+				return 1;
+		}
+		else if(row == n - 1){
+			if(map[row][column] < map[row-1][column] || map[row][column] < map[row][column-1])
+				return 0;
+			else
+				return 1;
+		}
+		else{
+			if(map[row][column] < map[row-1][column])
+				return 0;
+			else if(map[row][column] < map[row+1][column])
+				return 0;
+			else if(map[row][column] < map[row][column-1])
+				return 0;
+			else
+				return 1;
+		}
 	}
 	else{
-		
+		if(row == 0){
+			if(map[row][column] < map[row][column+1])
+				return 0;
+			else if(map[row][column] < map[row][column-1])
+				return 0;
+			else if(map[row][column] < map[row+1][column])
+				return 0;
+			else
+				return 1;
+		}
+		else if(row == n - 1){
+			if(map[row][column] < map[row][column+1])
+				return 0;
+			else if(map[row][column] < map[row][column-1])
+				return 0;
+			else if(map[row][column] < map[row-1][column])
+				return 0;
+			else
+				return 1;
+		}
+		else{
+			if(map[row][column] < map[row-1][column])
+				return 0;
+			else if(map[row][column] < map[row+1][column])
+				return 0;
+			else if(map[row][column] < map[row][column+1])
+				return 0;
+			else if(map[row][column] < map[row][column-1])
+				return 0;
+			else
+				return 1;
+		}
+	}
+	return 0;
+}
+void find_max(){
+	for(int i = 0; i < n; i++){
+		if(map[row][column] < map[row][i])
+			column = i;
 	}
 }
-int find(int *a, int *b){
+void find(int *a, int *b){
 	column = n/2;
 	// Finding middle column peak
 	int mid = 0;
-	int i = n - 1, j = 0;
-	while(i - j > 1){
-		mid = (i + j)/2;
-		if(map[mid][column] >= map[mid + 1][column])
-			i = mid;
-		else
-			j = mid + 1;
-	}
-	row = map[i][column] > map[j][column] ? i : j;
-	// Checking whether it's a peak
-	check_peak();
-	
-	return 1;
+	int i, j;
+	do{
+		i= n - 1, j = 0;
+		while(i - j > 1){
+			mid = (i + j)/2;
+			if(map[mid][column] >= map[mid + 1][column])
+				i = mid;
+			else
+				j = mid + 1;
+		}
+		row = map[i][column] > map[j][column] ? i : j;
+		//cout << "A\n" << row + 1 << ", " << column + 1 << " = " << map[row][column] << endl;
+		// Checking whether it's a peak
+		if(check_peak())
+			break;
+		else{
+			//cout << "B\n" << row + 1 << ", " << column + 1 << " = " << map[row][column] << endl;
+			find_max();
+			//cout << "C\n" << row + 1 << ", " << column + 1 << " = " << map[row][column] << endl;
+			if(check_peak())
+				break;
+		}
+	}while(1);
 }
 
 int main(){
@@ -51,11 +131,17 @@ int main(){
 	for(int i = 0; i < n; i++){
 		map[i] = new int [n];
 	}
+	srand(time(NULL));
+	do{
+	cout << " |  1  2  3  4  5  6  7  8  9\n";
+	cout << "-+---------------------------\n";
 	for(int i = 0; i < n; i++){		// Input the 2D array
+		cout << i + 1 << "| ";
 		for(int j = 0; j < n; j++){
 //			cin >> map[i][j];
-			map[i][j] = rand() % 9 + 1;
-			cout << map[i][j] << " ";
+			map[i][j] = rand() % 99 + 1;
+			//cout << map[i][j] << " ";
+			printf("%2d ", map[i][j]);
 		}
 		cout << endl;
 	}
@@ -63,5 +149,7 @@ int main(){
 	// Processing
 	find(a, b);
 	cout << row + 1 << ", " << column + 1 << " = " << map[row][column] << endl;
+	system("pause");
+	}while(1);
 	return 0;
 }

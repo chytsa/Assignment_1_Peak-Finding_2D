@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<time.h>
 using namespace std;
-int n = 9;					// Map boundary
+int n;						// Map boundary
 int  **map;					// Map address
 int column = 0, row = 0;	// Temp Peak coordinate
 int check_peak(){
@@ -126,30 +126,33 @@ void find(int *a, int *b){
 }
 
 int main(){
-//	cin >> n;						//  Input the size n
+	cout << "Please enter the size of array: ";
+	cin >> n;						//  Input the size n
 	map = new int*[n];				// Create space
 	for(int i = 0; i < n; i++){
 		map[i] = new int [n];
 	}
-	srand(time(NULL));
-	do{
-	cout << " |  1  2  3  4  5  6  7  8  9\n";
-	cout << "-+---------------------------\n";
+	//srand(time(NULL));
+	//do{
+	//cout << " |  1  2  3  4  5  6  7  8  9\n";
+	//cout << "-+---------------------------\n";
+	cout << "Please input the elements:\n";
 	for(int i = 0; i < n; i++){		// Input the 2D array
-		cout << i + 1 << "| ";
+		//cout << i + 1 << "| ";
 		for(int j = 0; j < n; j++){
-//			cin >> map[i][j];
-			map[i][j] = rand() % 99 + 1;
+			cin >> map[i][j];
+			//map[i][j] = rand() % 99 + 1;
 			//cout << map[i][j] << " ";
-			printf("%2d ", map[i][j]);
+			//printf("%2d ", map[i][j]);
 		}
-		cout << endl;
-	}
+		//cout << endl;
+	} 
 	int *a = new int, *b = new int;	//  Recording x,y coordinate 
 	// Processing
 	find(a, b);
-	cout << row + 1 << ", " << column + 1 << " = " << map[row][column] << endl;
-	system("pause");
-	}while(1);
+	//cout << row + 1 << ", " << column + 1 << " = " << map[row][column] << endl;
+	cout << map[row][column] << endl;
+	//system("pause");
+	//}while(1);
 	return 0;
 }

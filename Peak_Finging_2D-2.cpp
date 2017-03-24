@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<time.h>
 using namespace std;
-int n = 1000;				// Map boundary
+int n = 20000;				// Map boundary
 int  **map;					// Map address
 int column = 0, row = 0;	// Temp Peak coordinate
 int check_peak(){
@@ -132,7 +132,7 @@ int main(){
 		map[i] = new int [n];
 	}
 	srand(time(NULL));
-	do{
+	//do{
 	//cout << " |  1  2  3  4  5  6  7  8  9\n";
 	//cout << "-+---------------------------\n";
 	for(int i = 0; i < n; i++){		// Input the 2D array
@@ -155,7 +155,7 @@ int main(){
 		cout << map[row][column-1] << ",";
 		cout << map[row][column+1] << "\n";
 	}
-	system("pause");
-	}while(1);
+	//system("pause");
+	//}while(1);
 	return 0;
 }
